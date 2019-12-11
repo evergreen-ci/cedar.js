@@ -1,0 +1,51 @@
+{
+  "name": "cedar.js",
+  "scripts": {
+    "build": "tsc -d",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "lint": "tslint -c tslint.json src/*.ts",
+    "lint-fix": "tslint --fix -c tslint.json src/*.ts"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "axios-mock-adapter": "^1.17.0",
+    "jest": "^24.9.0",
+    "jest-junit": "^6.4.0",
+    "ts-jest": "^24.1.0",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "verbose": true,
+    "roots": [
+      "./src"
+    ]
+  },
+  "dependencies": {
+    "axios": "^0.19.0"
+  },
+  "description": "JavaScript/TypeScript library for the Cedar REST API",
+  "version": "1.0.0",
+  "main": "lib/cedar.js",
+  "types": "src/cedar.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evergreen-ci/cedar.js.git"
+  },
+  "keywords": [
+    "cedar"
+  ],
+  "author": "John Liu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evergreen-ci/cedar.js/issues"
+  },
+  "homepage": "https://github.com/evergreen-ci/cedar.js#readme",
+  "prettier": {
+    "trailingComma": "es5",
+    "arrowParens": "always"
+  }
+}

@@ -1,0 +1,77 @@
+stepback: true
+command_type: test
+ignore:
+  - "*.md"
+  - ".github/*"
+
+functions:
+  get-project:
+    command: git.get_project
+    type: setup
+    params:
+      directory: cedar.js
+
+  npm-install:
+    command: subprocess.exec
+    type: setup
+    params:
+      working_dir: cedar.js
+      binary: npm
+      args: [install]
+
+  npm-test:
+    command: subprocess.exec
+    params:
+      working_dir: cedar.js
+      binary: npm
+      args: [test, --, -u, --reporters=default, --reporters=jest-junit]
+      env:
+        CI: "true"
+
+  npm-run-lint:
+    command: subprocess.exec
+    params:
+      working_dir: cedar.js
+      binary: npm
+      args: [run, lint]
+
+  npm-build:
+    command: subprocess.exec
+    params:
+      working_dir: cedar.js
+      binary: npm
+      args: [run, build]
+
+  attach-results:
+    command: attach.xunit_results
+    params:
+      files:
+        - "./cedar.js/junit.xml"
+
+tasks:
+  - name: test
+    commands:
+      - func: get-project
+      - func: npm-install
+      - func: npm-test
+      - func: attach-results
+  - name: lint
+    commands:
+      - func: get-project
+      - func: npm-install
+      - func: npm-run-lint
+  - name: build
+    commands:
+      - func: get-project
+      - func: npm-install
+      - func: npm-build
+
+buildvariants:
+  - name: ubuntu1604
+    display_name: Ubuntu 16.04
+    run_on:
+      - ubuntu1604-test
+    tasks:
+      - name: build
+      - name: lint
+      - name: test
